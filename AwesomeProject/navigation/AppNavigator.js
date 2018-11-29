@@ -1,10 +1,15 @@
 import React from 'react';
-import { createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import LoginScreen from '../screens/LoginScreen';
+import ProductsScreen from '../screens/ProductsScreen';
+import ProductScreen from '../screens/ProductScreen';
 
-export default createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: MainTabNavigator,
+const App = createStackNavigator({
+  Login: {screen: LoginScreen},
+  Products: {screen: ProductsScreen},
+  Product: {screen: ProductScreen},
 });
+
+export default App;

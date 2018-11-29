@@ -1,0 +1,64 @@
+{
+  "name": "awesome-icons",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "004882ab2d5c418c5b2060e80596279b",
+      "css": "right-open-big",
+      "code": 59392,
+      "src": "entypo"
+    },
+    {
+      "uid": "c62cbc7fa604e32cc19731a3bb29be79",
+      "css": "map-o",
+      "code": 62072,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d862a10e1448589215be19702f98f2c1",
+      "css": "smile",
+      "code": 61720,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "d17030afaecc1e1c22349b99f3c4992a",
+      "css": "star-empty",
+      "code": 59393,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "9d3d9d6ce1ec63eaa26281e6162853c9",
+      "css": "camera-alt",
+      "code": 59394,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "44e04715aecbca7f266a17d5a7863c68",
+      "css": "plus",
+      "code": 59395,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "vqyhv5kmwcj9zxq28dhq5npykr2k39co",
+      "css": "basket",
+      "code": 59396,
+      "src": "modernpics"
+    },
+    {
+      "uid": "429c0a4a7c5aba2f8a894f98b48529b3",
+      "css": "football",
+      "code": 59416,
+      "src": "maki"
+    },
+    {
+      "uid": "610efad3150b6959e1b3fc863f39c60c",
+      "css": "gift",
+      "code": 59397,
+      "src": "typicons"
+    }
+  ]
+}
