@@ -14,8 +14,8 @@ export default class ProductScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: colors.blue,
-      headerTintColor: colors.white,
     },
+    headerTintColor: colors.white,
   };
 
   render() {
