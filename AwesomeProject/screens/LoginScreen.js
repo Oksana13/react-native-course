@@ -6,10 +6,7 @@ import {
   View,
   TouchableHighlight
 } from 'react-native';
-// import { WebBrowser } from 'expo';
-import ProductsScreen from '../screens/ProductsScreen';
 
-import { MonoText } from '../components/StyledText';
 import styles from '../styles/LoginStyles.js';
 
 export default class LoginScreen extends React.Component {

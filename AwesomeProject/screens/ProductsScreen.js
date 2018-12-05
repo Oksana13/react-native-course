@@ -5,7 +5,6 @@ import {
   FlatList,
   TouchableHighlight,
 } from 'react-native';
-import { AppLoading, Asset, Font, Icon } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
 import fontelloConfig from '../assets/config.json';
