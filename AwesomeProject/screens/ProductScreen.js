@@ -2,7 +2,9 @@ import React from 'react';
 import {
   Text,
   View,
-  TouchableHighlight 
+  TouchableHighlight,
+  ScrollView,
+  BackHandler,
 } from 'react-native';
 import { createIconSetFromFontello } from '@expo/vector-icons';
 import fontelloConfig from '../assets/config.json';
@@ -11,45 +13,69 @@ import styles from '../styles/ProductStyles.js';
 import { colors } from '../styles/variables.js';
 
 export default class ProductScreen extends React.Component {
-  static navigationOptions = {
-    headerStyle: {
-      backgroundColor: colors.blue,
-    },
-    headerTintColor: colors.white,
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerStyle: {
+        backgroundColor: colors.blue,
+      },
+      headerTintColor: colors.white,
+      title: navigation.getParam('productName'),
+      headerTitleStyle: {
+        fontWeight: 'normal',
+        fontFamily: 'vinchHand',
+        fontSize: 30
+      },
+    }
   };
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  handleBackPress = async () => {
+    await this.props.navigation.goBack();
+    return true;
+  }
 
   render() {
     const {navigate} = this.props.navigation;
     const {navigation} = this.props;
     const productName = navigation.getParam('productName');
     const productIcon = navigation.getParam('productIcon');
+    const description = navigation.getParam('description');
 
     return (
       <View style={styles.container}>
-        <View style={styles.title}>
-          <CustomIcon 
-            style={styles.icon} 
-            name={productIcon} 
-            size={28} 
-            color="#222" 
-          />
-          <Text style={styles.productName}>
-            {productName}
+        <ScrollView>
+          <View style={styles.title}>
+            <CustomIcon 
+              style={styles.icon} 
+              name={productIcon} 
+              size={28} 
+              color="#222" 
+            />
+            <Text style={styles.productName}>
+              {productName}
+            </Text>
+          </View>
+          <Text style={styles.description}>
+            {description}
           </Text>
-        </View>
-        <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-        <TouchableHighlight
-          style={styles.button}
-          onPress={() => {navigate('Products')}}
-        >
-          <Text
-            style={styles.buttonText}
+          <TouchableHighlight
+            style={styles.button}
+            onPress={() => this.props.navigation.goBack()}
           >
-            All products
-          </Text>
-        </TouchableHighlight >
+            <Text
+              style={styles.buttonText}
+            >
+              All products
+            </Text>
+          </TouchableHighlight >
+        </ScrollView>
       </View>
     );
   }

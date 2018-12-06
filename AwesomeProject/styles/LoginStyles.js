@@ -8,6 +8,10 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.white,
   },
+  scrollView: {
+    flex: 1,
+    alignItems: 'center',
+  },
   image: {
     marginTop: 100,
     width: 100,
