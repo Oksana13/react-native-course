@@ -18,10 +18,6 @@ export default styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingLeft: 30,
-    paddingRight: 30,
-    paddingVertical: 10,
-    backgroundColor: colors.green,
   },
   description: {
     fontSize: 18,
@@ -43,7 +39,7 @@ export default styles = StyleSheet.create({
   },
   buttonText: {
     paddingVertical: 5,
-    backgroundColor: colors.blue,
+    backgroundColor: colors.green,
     textAlign: 'center',
     fontSize: 24,
     fontFamily: 'vinchHand',

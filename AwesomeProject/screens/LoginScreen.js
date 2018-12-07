@@ -20,8 +20,8 @@ export default class LoginScreen extends React.Component {
     this.state = { 
       userName: '',
       userPassword: '',
-      auth_token: '',
-      errorMessage: false
+      errorMessage: '',
+      responseStatus: ''
     };
   }
 
@@ -77,15 +77,16 @@ export default class LoginScreen extends React.Component {
   userLogin = async () => {
     const {navigate} = this.props.navigation;
 
-    await this.getToken();
-    if (!this.state.auth_token.message) {
+    await this.login();
+    if (this.state.responseStatus === 200) {
+      this.setState({errorMessage: ''});
       navigate('Products');
     } else {
-      this.setState({errorMessage: 'Login or Password is not correct'});
+      this.setState({errorMessage: 'Login or Password is incorrect'});
     }
   };
 
-  getToken = () => {
+  login = () => {
     return fetch('http://ecsc00a02fb3.epam.com/index.php/rest/V1/integration/customer/token', {
       method: 'POST',
       headers: {
@@ -97,14 +98,14 @@ export default class LoginScreen extends React.Component {
 	      "password": this.state.userPassword
       }),
     })
-      .then((response) => response.json())
       .then((response) => {
-        this.setState({errorMessage: ''});
-        this.setState({auth_token: response});
+        response.json();
+        this.setState({responseStatus: response.status});
+      })
+      .then((response) => {
         return response;
       })
       .catch((error) => {
-        alert(response);
         console.error(error);
       });
   }

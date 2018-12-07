@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "AwesomeProject",
+    "name": "ReactNativeCourse-module-2",
     "description": "A very interesting project.",
-    "slug": "AwesomeProject",
+    "slug": "reactnativecourse-module-2",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": [

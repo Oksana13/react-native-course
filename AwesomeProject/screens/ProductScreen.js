@@ -6,11 +6,9 @@ import {
   ScrollView,
   BackHandler,
 } from 'react-native';
-import { createIconSetFromFontello } from '@expo/vector-icons';
-import fontelloConfig from '../assets/config.json';
-const CustomIcon = createIconSetFromFontello(fontelloConfig, 'AwesomeIcons');
 import styles from '../styles/ProductStyles.js';
 import { colors } from '../styles/variables.js';
+import ProductHeader from '../components/ProductHeader';
 
 export default class ProductScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -19,12 +17,11 @@ export default class ProductScreen extends React.Component {
         backgroundColor: colors.blue,
       },
       headerTintColor: colors.white,
-      title: navigation.getParam('productName'),
-      headerTitleStyle: {
-        fontWeight: 'normal',
-        fontFamily: 'vinchHand',
-        fontSize: 30
-      },
+      headerTitle: <ProductHeader 
+        name={navigation.getParam('productName')}
+        icon={navigation.getParam('productIcon')}  
+      />,
+      
     }
   };
 
@@ -51,17 +48,6 @@ export default class ProductScreen extends React.Component {
     return (
       <View style={styles.container}>
         <ScrollView>
-          <View style={styles.title}>
-            <CustomIcon 
-              style={styles.icon} 
-              name={productIcon} 
-              size={28} 
-              color="#222" 
-            />
-            <Text style={styles.productName}>
-              {productName}
-            </Text>
-          </View>
           <Text style={styles.description}>
             {description}
           </Text>
