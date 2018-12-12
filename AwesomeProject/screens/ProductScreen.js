@@ -54,9 +54,6 @@ export default class ProductScreen extends React.Component {
             originWhitelist={['*']}
             source={{ html: description.value }}
           />
-          {/* <Text style={styles.description}>
-            {description.value}
-          </Text> */}
           <TouchableHighlight
             style={styles.button}
             onPress={() => this.props.navigation.goBack()}

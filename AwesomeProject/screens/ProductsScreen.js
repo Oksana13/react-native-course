@@ -4,7 +4,7 @@ import {
   View,
   FlatList,
   TouchableHighlight,
-  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -38,14 +38,31 @@ export default class ProductsScreen extends React.Component {
     this.fetchProducts();
   }
 
+  // todo: fix getting issue
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    this.fetchProducts().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
   handleLoadMore = () => {
-    this.setState(
-      {
-        page: this.state.page + 1,
-      }, () => {
+    this.setState({ page: this.state.page + 1 }, () => {
         this.fetchProducts();
       }
     );
+  }
+
+  fetchProducts = () => {
+    fetch(`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${this.state.page}`)
+      .then(response => response.json())
+      .then(response => {
+        this.setState(
+          {
+            productsList: [...this.state.productsList, ...response.items]
+          }
+        );
+      });
   }
 
   render() {
@@ -56,6 +73,12 @@ export default class ProductsScreen extends React.Component {
         <FlatList 
           data={this.state.productsList}
           keyExtractor={(item, index) => index.toString()}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
           renderItem={({item}) => 
           <TouchableHighlight
             underlayColor="#CEDB56"
@@ -88,13 +111,5 @@ export default class ProductsScreen extends React.Component {
         />
       </View>
     );
-  }
-
-  fetchProducts = () => {
-    fetch(`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${this.state.page}`)
-      .then(response => response.json())
-      .then(response => {
-        this.setState({productsList: [...this.state.productsList, ...response.items]});
-      });
   }
 }
