@@ -7,8 +7,8 @@ import ProductsScreen from '../screens/ProductsScreen';
 import ProductScreen from '../screens/ProductScreen';
 
 const App = createStackNavigator({
-  Login: {screen: LoginScreen},
   Products: {screen: ProductsScreen},
+  Login: {screen: LoginScreen},
   Product: {screen: ProductScreen},
 });
 

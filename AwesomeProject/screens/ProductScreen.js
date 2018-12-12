@@ -5,6 +5,7 @@ import {
   TouchableHighlight,
   ScrollView,
   BackHandler,
+  WebView,
 } from 'react-native';
 import styles from '../styles/ProductStyles.js';
 import { colors } from '../styles/variables.js';
@@ -43,14 +44,19 @@ export default class ProductScreen extends React.Component {
     const {navigation} = this.props;
     const productName = navigation.getParam('productName');
     const productIcon = navigation.getParam('productIcon');
-    const description = navigation.getParam('description');
+    const description = navigation.getParam('description') ? navigation.getParam('description') : {value: 'Sorry, there is no description yet'};
 
     return (
       <View style={styles.container}>
         <ScrollView>
-          <Text style={styles.description}>
-            {description}
-          </Text>
+          <WebView
+            style={styles.webView}
+            originWhitelist={['*']}
+            source={{ html: description.value }}
+          />
+          {/* <Text style={styles.description}>
+            {description.value}
+          </Text> */}
           <TouchableHighlight
             style={styles.button}
             onPress={() => this.props.navigation.goBack()}

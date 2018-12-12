@@ -45,4 +45,9 @@ export default styles = StyleSheet.create({
     fontFamily: 'vinchHand',
     color: colors.white,
   },
+  webView: {
+    minHeight: 320,
+    minWidth : 200,
+    flex: 1
+  },
 });
