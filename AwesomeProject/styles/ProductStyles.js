@@ -12,19 +12,13 @@ export default styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   icon: {
-    color: colors.white,
+    color: colors.green,
   },
   title: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  description: {
-    fontSize: 18,
-    fontFamily: 'vinchHand',
-    marginVertical: 40,
-    marginLeft: 50,
-    marginRight: 100,
+    marginLeft: 5,
   },
   productName: {
     paddingLeft: 20,

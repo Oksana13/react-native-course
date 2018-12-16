@@ -40,20 +40,17 @@ export default class ProductsScreen extends React.Component {
     this.fetchProducts();
   }
 
-  setModalVisible(visible) {
+  setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   }
 
-  // todo: fix getting issue
   onRefresh = () => {
     this.setState({refreshing: true});
     this.fetchProducts()
       .then((response) => {
-        // if (response || response.status !== 200) {
-        //   // this.setModalVisible(true);
-        //   this.setState({modalVisible: true});
-        //   this.setState({refreshing: false});
-        // }
+        if (response && response.status !== 200) {
+          this.setModalVisible(true);
+        }
         this.setState({refreshing: false});
       })
       .catch((error) => {
