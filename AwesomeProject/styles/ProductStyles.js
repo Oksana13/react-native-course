@@ -30,7 +30,7 @@ export default styles = StyleSheet.create({
     paddingLeft: 20,
     fontSize: 30,
     fontFamily: 'vinchHand',
-    color: colors.white,
+    color: colors.green,
   },
   button: {
     width: 150,

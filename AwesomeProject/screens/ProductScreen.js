@@ -18,10 +18,10 @@ export default class ProductScreen extends React.Component {
         backgroundColor: colors.blue,
       },
       headerTintColor: colors.white,
-      headerTitle: <ProductHeader 
-        name={navigation.getParam('productName')}
-        icon={navigation.getParam('productIcon')}  
-      />,
+      // headerTitle: <ProductHeader 
+      //   name={navigation.getParam('productName')}
+      //   icon={navigation.getParam('productIcon')}  
+      // />,
       
     }
   };
@@ -48,6 +48,9 @@ export default class ProductScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Text style={styles.productName}>
+          {productName}
+        </Text>
         <ScrollView>
           <WebView
             style={styles.webView}

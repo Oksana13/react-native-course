@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableHighlight,
   RefreshControl,
+  Modal,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -32,18 +33,32 @@ export default class ProductsScreen extends React.Component {
     productsList: [],
     page: 0,
     refreshing: false,
+    modalVisible: false,
   };
 
   componentDidMount() {
     this.fetchProducts();
   }
 
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
+  }
+
   // todo: fix getting issue
   onRefresh = () => {
     this.setState({refreshing: true});
-    this.fetchProducts().then(() => {
-      this.setState({refreshing: false});
-    });
+    this.fetchProducts()
+      .then((response) => {
+        // if (response || response.status !== 200) {
+        //   // this.setModalVisible(true);
+        //   this.setState({modalVisible: true});
+        //   this.setState({refreshing: false});
+        // }
+        this.setState({refreshing: false});
+      })
+      .catch((error) => {
+        this.setModalVisible(true);
+      });
   }
 
   handleLoadMore = () => {
@@ -70,6 +85,34 @@ export default class ProductsScreen extends React.Component {
 
     return (
       <View style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          style={styles.modal}
+          onRequestClose={() => {
+            Alert.alert('Modal has been closed.');
+          }}>
+          <View style={{marginTop: 22}}>
+            <View>
+              <Text style={styles.modalMessage}>There is some problems with the Internet conection. Please try agein</Text>
+              <View style={styles.modalButtonWrapper}>
+                <TouchableHighlight
+                  style={styles.modalButton}
+                  onPress={() => {this.onRefresh}}>
+                  <Text style={styles.modalButtonText}>Try again</Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                  style={styles.modalButton}
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}>
+                  <Text style={styles.modalButtonText}>Close</Text>
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <FlatList 
           data={this.state.productsList}
           keyExtractor={(item, index) => index.toString()}
