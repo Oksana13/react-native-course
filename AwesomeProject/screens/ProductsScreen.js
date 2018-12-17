@@ -6,13 +6,15 @@ import {
   TouchableHighlight,
   RefreshControl,
   Modal,
+  Alert
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
 import fontelloConfig from '../assets/config.json';
-const CustomIcon = createIconSetFromFontello(fontelloConfig, 'AwesomeIcons');
 import styles from '../styles/ProductsStyles.js';
 import { colors } from '../styles/variables.js';
+
+const CustomIcon = createIconSetFromFontello(fontelloConfig, 'AwesomeIcons');
 
 export default class ProductsScreen extends React.Component {
   static navigationOptions = {
@@ -37,115 +39,156 @@ export default class ProductsScreen extends React.Component {
   };
 
   componentDidMount() {
+    this.mounted = true;
     this.fetchProducts();
   }
 
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
-  onRefresh = () => {
-    this.setState({refreshing: true});
-    this.fetchProducts()
+  setModalVisible = (modalVisible) => {
+    if (this.mounted) {
+      this.setState({modalVisible});
+    }
+  };
+
+  setRefreshing = (refreshing) => {
+    if (this.mounted) {
+      this.setState({refreshing})
+    }
+  };
+
+  setProducts = (items) => {
+    if (this.mounted) {
+      this.setState(({productsList}) => ({productsList: [...productsList, ...items]}));
+    }
+  };
+
+  fetchProducts = () => {
+    return fetch(`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${this.state.page}`)
       .then((response) => {
-        if (response && response.status !== 200) {
-          this.setModalVisible(true);
+        if (!response || response.status !== 200) {
+          throw  response;
         }
-        this.setState({refreshing: false});
+        return response;
+      })
+      .then(response => response.json())
+      .then((response) => {
+        this.setProducts(response.items);
+        return response;
       })
       .catch((error) => {
         this.setModalVisible(true);
+        return error;
       });
-  }
+  };
+
+  onRefresh = () => {
+    this.setRefreshing(true);
+    this.fetchProducts().then(() => this.setRefreshing(false));
+  };
 
   handleLoadMore = () => {
-    this.setState({ page: this.state.page + 1 }, () => {
-        this.fetchProducts();
-      }
+    this.setState(
+      ({page}) => ({page: page + 1}),
+      () => this.fetchProducts()
+    );
+  };
+
+  renderModal() {
+    const {modalVisible} = this.state;
+    return (
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        style={styles.modal}
+        onRequestClose={() => {
+          Alert.alert(
+            'Close modal?',
+            'The list will not be updated.',
+            [
+              {text: 'OK', onPress: () => this.setModalVisible(false)}
+            ]
+          );
+        }}
+      >
+        <View style={{marginTop: 22}}>
+          <View>
+            <Text style={styles.modalMessage}>
+              There is some problems with the Internet connection. Please try again.
+            </Text>
+          </View>
+          <View style={styles.modalButtonWrapper}>
+            <TouchableHighlight
+              style={styles.modalButton}
+              onPress={() => {
+                this.onRefresh();
+              }}
+            >
+              <Text style={styles.modalButtonText}>Try again</Text>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.modalButton}
+              onPress={() => {
+                this.setModalVisible(false);
+              }}
+            >
+              <Text style={styles.modalButtonText}>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </View>
+      </Modal>
     );
   }
 
-  fetchProducts = () => {
-    fetch(`http://ecsc00a02fb3.epam.com/rest/V1/products?searchCriteria[pageSize]=${this.state.page}`)
-      .then(response => response.json())
-      .then(response => {
-        this.setState(
-          {
-            productsList: [...this.state.productsList, ...response.items]
-          }
-        );
-      });
-  }
-
-  render() {
+  renderList() {
     const {navigate} = this.props.navigation;
-
+    const {productsList, refreshing} = this.state;
     return (
       <View style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          style={styles.modal}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text style={styles.modalMessage}>There is some problems with the Internet conection. Please try agein</Text>
-              <View style={styles.modalButtonWrapper}>
-                <TouchableHighlight
-                  style={styles.modalButton}
-                  onPress={() => {this.onRefresh}}>
-                  <Text style={styles.modalButtonText}>Try again</Text>
-                </TouchableHighlight>
-                <TouchableHighlight
-                  style={styles.modalButton}
-                  onPress={() => {
-                    this.setModalVisible(!this.state.modalVisible);
-                  }}>
-                  <Text style={styles.modalButtonText}>Close</Text>
-                </TouchableHighlight>
-              </View>
-            </View>
-          </View>
-        </Modal>
-        <FlatList 
-          data={this.state.productsList}
+        <FlatList
+          data={productsList}
+          refreshing={refreshing}
           keyExtractor={(item, index) => index.toString()}
-          refreshing={this.state.refreshing}
-          onRefresh={this.onRefresh}
-          renderItem={({item}) => 
-          <TouchableHighlight
-            underlayColor="#CEDB56"
-            onPress={() => {navigate('Product', {
-              productName: item.name,
-              description: item.custom_attributes.find(product => product.attribute_code === 'description')
-            })
-          }}
-          >
-            <View style={styles.row}>
-              <View style={styles.product}>
-                <CustomIcon 
-                  style={styles.icon} 
-                  name={item.icon} 
-                  size={28} 
-                  color="#222" 
-                />
-                <Text style={styles.productName}>{item.name}</Text>
+          onRefresh={() => this.onRefresh()}
+          renderItem={({item}) => (
+            <TouchableHighlight
+              underlayColor="#CEDB56"
+              onPress={() => {navigate('Product', {
+                productName: item.name,
+                description: item.custom_attributes.find(product => product.attribute_code === 'description')
+              })
+              }}
+            >
+              <View style={styles.row}>
+                <View style={styles.product}>
+                  <CustomIcon
+                    style={styles.icon}
+                    name={item.icon}
+                    size={28}
+                    color="#222"
+                  />
+                  <Text style={styles.productName}>{item.name}</Text>
+                </View>
+                <Ionicons name="ios-arrow-forward" size={22} />
               </View>
-              
-              <Ionicons 
-                name="ios-arrow-forward"
-                size={22}
-              />
-            </View>
-          </TouchableHighlight>
-          }
+            </TouchableHighlight>
+          )}
           onEndReached={this.handleLoadMore}
           onEndThreshold={0}
         />
       </View>
+    );
+  }
+
+  render() {
+    return (
+      <React.Fragment>
+        {this.renderList()}
+        {this.renderModal()}
+      </React.Fragment>
     );
   }
 }
