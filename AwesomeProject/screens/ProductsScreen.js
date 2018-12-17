@@ -113,12 +113,8 @@ export default class ProductsScreen extends React.Component {
         <FlatList 
           data={this.state.productsList}
           keyExtractor={(item, index) => index.toString()}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
+          refreshing={this.state.refreshing}
+          onRefresh={this.onRefresh}
           renderItem={({item}) => 
           <TouchableHighlight
             underlayColor="#CEDB56"
