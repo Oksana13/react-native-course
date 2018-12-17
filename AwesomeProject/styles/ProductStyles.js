@@ -12,25 +12,19 @@ export default styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   icon: {
-    color: colors.white,
+    color: colors.green,
   },
   title: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-  },
-  description: {
-    fontSize: 18,
-    fontFamily: 'vinchHand',
-    marginVertical: 40,
-    marginLeft: 50,
-    marginRight: 100,
+    marginLeft: 5,
   },
   productName: {
     paddingLeft: 20,
     fontSize: 30,
     fontFamily: 'vinchHand',
-    color: colors.white,
+    color: colors.green,
   },
   button: {
     width: 150,
@@ -44,5 +38,10 @@ export default styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'vinchHand',
     color: colors.white,
+  },
+  webView: {
+    minHeight: 320,
+    minWidth : 200,
+    flex: 1
   },
 });

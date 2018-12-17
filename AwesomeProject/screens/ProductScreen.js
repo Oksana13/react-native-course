@@ -5,10 +5,14 @@ import {
   TouchableHighlight,
   ScrollView,
   BackHandler,
+  WebView,
 } from 'react-native';
 import styles from '../styles/ProductStyles.js';
 import { colors } from '../styles/variables.js';
-import ProductHeader from '../components/ProductHeader';
+import { createIconSetFromFontello } from '@expo/vector-icons';
+import fontelloConfig from '../assets/config.json';
+
+const CustomIcon = createIconSetFromFontello(fontelloConfig, 'AwesomeIcons');
 
 export default class ProductScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -16,12 +20,7 @@ export default class ProductScreen extends React.Component {
       headerStyle: {
         backgroundColor: colors.blue,
       },
-      headerTintColor: colors.white,
-      headerTitle: <ProductHeader 
-        name={navigation.getParam('productName')}
-        icon={navigation.getParam('productIcon')}  
-      />,
-      
+      headerTintColor: colors.white,      
     }
   };
 
@@ -42,15 +41,33 @@ export default class ProductScreen extends React.Component {
     const {navigate} = this.props.navigation;
     const {navigation} = this.props;
     const productName = navigation.getParam('productName');
-    const productIcon = navigation.getParam('productIcon');
-    const description = navigation.getParam('description');
+    const description = navigation.getParam('description') ? navigation.getParam('description') : {value: 'Sorry, there is no description yet'};
 
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.description}>
-            {description}
+        <View style={styles.title}>
+        <TouchableHighlight 
+          style={styles.title}
+          onPress={() => {navigate('Map', {
+
+          })}}
+        >
+          <CustomIcon 
+            style={styles.icon} 
+            name='map-o' 
+            size={34} 
+          />
+          </TouchableHighlight>
+          <Text style={styles.productName}>
+            {productName}
           </Text>
+        </View>
+        <ScrollView>
+          <WebView
+            style={styles.webView}
+            originWhitelist={['*']}
+            source={{ html: description.value }}
+          />
           <TouchableHighlight
             style={styles.button}
             onPress={() => this.props.navigation.goBack()}

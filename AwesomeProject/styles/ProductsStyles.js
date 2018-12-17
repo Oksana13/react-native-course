@@ -28,5 +28,32 @@ export default styles = StyleSheet.create({
   },
   icon: {
     paddingTop: 5,
-  }
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  modalMessage: {
+    textAlign: 'center',
+    fontSize: 24,
+    fontFamily: 'vinchHand',
+  },
+  modalButtonWrapper: {
+    flex: 1,
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    marginTop: 50,
+  },
+  modalButton: {
+    width: 100,
+    marginLeft: 0,
+  },
+  modalButtonText: {
+    paddingVertical: 5,
+    backgroundColor: colors.green,
+    textAlign: 'center',
+    fontSize: 24,
+    fontFamily: 'vinchHand',
+    color: colors.white,
+  },
 });
