@@ -36,6 +36,7 @@ export default class ProductsScreen extends React.Component {
     page: 0,
     refreshing: false,
     modalVisible: false,
+    disabledButtons: false,
   };
 
   componentDidMount() {
@@ -56,6 +57,12 @@ export default class ProductsScreen extends React.Component {
   setRefreshing = (refreshing) => {
     if (this.mounted) {
       this.setState({refreshing})
+    }
+  };
+
+  setButtonsDisabled = (disabledButtons) => {
+    if (this.mounted) {
+      this.setState({disabledButtons})
     }
   };
 
@@ -86,7 +93,11 @@ export default class ProductsScreen extends React.Component {
 
   onRefresh = () => {
     this.setRefreshing(true);
-    this.fetchProducts().then(() => this.setRefreshing(false));
+    this.setButtonsDisabled(true);
+    this.fetchProducts().then(() => {
+      this.setRefreshing(false);
+      this.setButtonsDisabled(false);
+    });
   };
 
   handleLoadMore = () => {
@@ -123,6 +134,7 @@ export default class ProductsScreen extends React.Component {
           <View style={styles.modalButtonWrapper}>
             <TouchableHighlight
               style={styles.modalButton}
+              disabled={this.state.disabledButtons}
               onPress={() => {
                 this.onRefresh();
               }}
@@ -131,9 +143,8 @@ export default class ProductsScreen extends React.Component {
             </TouchableHighlight>
             <TouchableHighlight
               style={styles.modalButton}
-              onPress={() => {
-                this.setModalVisible(false);
-              }}
+              disabled={this.state.disabledButtons}
+              onPress={() => {this.setModalVisible(false)}}
             >
               <Text style={styles.modalButtonText}>Close</Text>
             </TouchableHighlight>
