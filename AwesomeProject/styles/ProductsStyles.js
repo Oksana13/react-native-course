@@ -46,6 +46,7 @@ export default styles = StyleSheet.create({
   },
   modalButton: {
     width: 100,
+    height: 48,
     marginLeft: 0,
   },
   modalButtonText: {

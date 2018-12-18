@@ -18,8 +18,8 @@ export default class LoginScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      userName: '',
-      userPassword: '',
+      userName: 'oksana_klimova@epam.com',
+      userPassword: 'ReactNative123',
       errorMessage: '',
       responseStatus: ''
     };
