@@ -1,15 +1,23 @@
 import React from 'react';
 import {
+  NativeModules,
   Image,
   Text,
   TextInput,
   View,
   TouchableHighlight,
   ScrollView,
+  LayoutAnimation,
+  TouchableOpacity,
+  Animated,
+  Easing
 } from 'react-native';
-
 import styles from '../styles/LoginStyles.js';
 
+const { UIManager } = NativeModules;
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null,
@@ -21,22 +29,107 @@ export default class LoginScreen extends React.Component {
       userName: 'oksana_klimova@epam.com',
       userPassword: 'ReactNative123',
       errorMessage: '',
-      responseStatus: ''
+      responseStatus: '',
+      width: 100,
+      height: 100,
     };
+    this.animatedValue = new Animated.Value(0);
+    this.animatedValue1 = new Animated.Value(0);
+    this.animatedValue2 = new Animated.Value(0);
+    this.scale = new Animated.Value(-200);
+  }
+
+  componentDidMount() {
+    this.parallelAnimation();
+    this.animate();
+    this.decayAnimation();
+  }
+
+  animate() {
+    this.animatedValue.setValue(0);
+    Animated.timing(
+      this.animatedValue,
+      {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear
+      }
+    ).start(() => this.animate())
+  }
+  
+  decayAnimation() {
+    this.scale.setValue(-200);
+    Animated.decay(
+      this.scale, 
+      { 
+        velocity: 1, 
+        deceleration: 0.997,
+      }).start();
+  }
+
+  parallelAnimation() {
+    this.animatedValue1.setValue(0)
+    this.animatedValue2.setValue(0)
+    const createAnimation = function (value, duration, easing, delay = 0) {
+      return Animated.timing(
+        value,
+        {
+          toValue: 1,
+          duration,
+          easing,
+          delay
+        }
+      )
+    }
+    Animated.parallel([
+      createAnimation(this.animatedValue1, 2000, Easing.ease),
+      createAnimation(this.animatedValue2, 1000, Easing.ease, 1000),
+    ]).start();
   }
 
   render() {
+    const opacity = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 1, 0]
+    });
+    const textSize = this.animatedValue.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [18, 32, 18]
+    });
+    const scaleText = this.animatedValue1.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0.5, 1]
+    });
+    const introButton = this.animatedValue2.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-1000, 0]
+    });
+
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <Image
-            source={require('../assets/images/heart.png')
-            }
-            style={styles.image}
-          />
-          <Text style={styles.title}>
-            Friday's shop
-          </Text>
+          <TouchableOpacity
+            onPress={this.makeAnimation}
+          >
+            <Animated.Image
+              source={require('../assets/images/heart.png')}
+              style={[styles.image, {
+                width: this.state.width, 
+                height: this.state.height,
+                opacity,
+              }]}
+            />
+          </TouchableOpacity>
+          <View style={styles.titleContainer}
+            >
+            <Animated.Text style={{
+                fontSize: textSize,
+                fontFamily: 'vinchHand',
+              }}
+            >
+              Friday's shop
+            </Animated.Text>
+          </View>
           <View style={styles.form}>
             <View style={styles.inputWrapper}>
               <TextInput
@@ -58,21 +151,41 @@ export default class LoginScreen extends React.Component {
             <Text>
                 {this.state.errorMessage}
             </Text>
-            <TouchableHighlight
-              style={styles.buttonWrapper}
-              onPress={this.userLogin}
-            >
-              <Text
-                style={styles.buttonText}
+            <Animated.View style={{top: introButton}}>
+              <TouchableHighlight
+                style={styles.buttonWrapper}
+                onPress={this.userLogin}
               >
-                Login
-              </Text>
-            </TouchableHighlight >
+                <Text
+                  style={styles.buttonText}
+                >
+                  Login
+                </Text>
+              </TouchableHighlight>
+            </Animated.View>
           </View>
+          <Animated.Text style={{
+              marginBottom: this.scale
+            }}
+          >
+            Join
+          </Animated.Text>
+          <Animated.Text style={{
+              marginBottom: 25,
+              transform: [{scale: scaleText}]
+            }}
+          >
+            Our brand new app!
+          </Animated.Text>
         </ScrollView>
       </View>
     );
   }
+
+  makeAnimation = () => {
+    LayoutAnimation.spring();
+    this.setState({width: this.state.width + 15, height: this.state.height + 15})
+  };
 
   userLogin = async () => {
     const {navigate} = this.props.navigation;

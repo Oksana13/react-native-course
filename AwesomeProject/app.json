@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "ReactNativeCourse-module-3",
+    "name": "ReactNativeCourse-module-4",
     "description": "A very interesting project.",
-    "slug": "reactnativecourse-module-3",
+    "slug": "reactnativecourse-module-4",
     "privacy": "public",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "32.0.0",
     "platforms": [
       "ios",
       "android"

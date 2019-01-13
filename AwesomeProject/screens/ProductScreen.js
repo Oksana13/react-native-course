@@ -6,6 +6,7 @@ import {
   ScrollView,
   BackHandler,
   WebView,
+  Animated,
 } from 'react-native';
 import styles from '../styles/ProductStyles.js';
 import { colors } from '../styles/variables.js';
@@ -24,12 +25,46 @@ export default class ProductScreen extends React.Component {
     }
   };
 
+  constructor() {
+    super();
+    this.springValue = new Animated.Value(0.3);
+    this.opacityAnimationValue = new Animated.Value(.0);
+    this.moveAnimationValue = new Animated.ValueXY();
+  }
+
   componentDidMount() {
+    this.springAnimation();
+    this.stagerAnimation();
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  springAnimation() {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.springValue,
+      {
+        toValue: 1,
+        friction: 1
+      }
+    ).start()
+  }
+
+  stagerAnimation() {
+    this.opacityAnimationValue.setValue(0);
+    Animated.stagger(100, [
+      Animated.timing(this.moveAnimationValue, {
+        toValue: -50,
+        duration: 500
+      }),
+      Animated.timing(this.opacityAnimationValue, {
+        toValue: 1,
+        duration: 200
+      })
+    ]).start()
   }
 
   handleBackPress = async () => {
@@ -58,9 +93,14 @@ export default class ProductScreen extends React.Component {
             size={34} 
           />
           </TouchableHighlight>
-          <Text style={styles.productName}>
+          <Animated.Text style={{
+            paddingLeft: 20,
+            fontSize: 30,
+            fontFamily: 'vinchHand',
+            transform: [{scale: this.springValue}]
+          }}>
             {productName}
-          </Text>
+          </Animated.Text>
         </View>
         <ScrollView>
           <WebView
@@ -68,16 +108,21 @@ export default class ProductScreen extends React.Component {
             originWhitelist={['*']}
             source={{ html: description.value }}
           />
-          <TouchableHighlight
-            style={styles.button}
-            onPress={() => this.props.navigation.goBack()}
-          >
-            <Text
-              style={styles.buttonText}
-            >
-              All products
-            </Text>
-          </TouchableHighlight >
+           <Animated.View style={{
+            opacity: this.opacityAnimationValue, 
+            transform: this.moveAnimationValue.getTranslateTransform()
+            }}>
+              <TouchableHighlight
+                style={styles.button}
+                onPress={() => this.props.navigation.goBack()}
+              >
+                <Text
+                  style={styles.buttonText}
+                >
+                  All products
+                </Text>
+              </TouchableHighlight >
+            </Animated.View>
         </ScrollView>
       </View>
     );

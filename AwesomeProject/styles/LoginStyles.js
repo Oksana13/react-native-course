@@ -18,6 +18,10 @@ export default styles = StyleSheet.create({
     height: 80,
     resizeMode: 'contain',
   },
+  titleContainer: {
+    height: 40,
+    marginVertical: 70,
+  },
   title: {
     marginVertical: 70,
     fontSize: 40,
