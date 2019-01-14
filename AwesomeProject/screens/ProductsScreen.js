@@ -49,7 +49,6 @@ export default class ProductsScreen extends React.Component {
   componentDidMount() {
     this.mounted = true;
     this.fetchProducts();
-    this.fadeAnimation();
     this.sequenceAnimation();
   }
 
@@ -102,6 +101,7 @@ export default class ProductsScreen extends React.Component {
   setProducts = (items) => {
     if (this.mounted) {
       this.setState(({productsList}) => ({productsList: [...productsList, ...items]}));
+      this.fadeAnimation();
     }
   };
 
@@ -211,13 +211,13 @@ export default class ProductsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Animated.View style= {{ 
-              marginTop: 10,
+              backgroundColor: 'yellow',
               alignItems: 'center',
               transform: [ { translateY } ]
             }}
           >
           <Animated.Text style ={{ opacity }}>
-            List of best products
+          List of best products
           </Animated.Text>
         </Animated.View>
         <AnimatedFlatList 
@@ -235,18 +235,10 @@ export default class ProductsScreen extends React.Component {
               underlayColor="#CEDB56"
               onPress={() => this.navigateToProduct(item)}
             >
-              <Animated.View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  paddingLeft: 30,
-                  paddingRight: 30,
-                  paddingVertical: 10,
-                  borderTopColor: colors.lightGrey,
-                  borderBottomColor: colors.lightGrey,
-                  borderWidth: 1,
+              <Animated.View style={
+                [styles.row, {
                   opacity: fadeAnim,
-                }}
+                }]}
               >
                 <View style={styles.product}>
                   <Text style={styles.productName}>

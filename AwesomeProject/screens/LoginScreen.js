@@ -36,13 +36,13 @@ export default class LoginScreen extends React.Component {
     this.animatedValue = new Animated.Value(0);
     this.animatedValue1 = new Animated.Value(0);
     this.animatedValue2 = new Animated.Value(0);
+    this.springValue = new Animated.Value(0.3)
     this.scale = new Animated.Value(-200);
   }
 
   componentDidMount() {
     this.parallelAnimation();
     this.animate();
-    this.decayAnimation();
   }
 
   animate() {
@@ -65,6 +65,17 @@ export default class LoginScreen extends React.Component {
         velocity: 1, 
         deceleration: 0.997,
       }).start();
+  }
+
+  spring () {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.springValue,
+      {
+        toValue: 1,
+        friction: 1
+      }
+    ).start()
   }
 
   parallelAnimation() {
@@ -148,9 +159,12 @@ export default class LoginScreen extends React.Component {
                 onChangeText={(userPassword) => this.setState({userPassword})}
               />
             </View>
-            <Text>
+            <Animated.Text style={{
+              marginLeft: this.scale,
+              transform: [{scale: this.springValue}]
+            }}>
                 {this.state.errorMessage}
-            </Text>
+            </Animated.Text>
             <Animated.View style={{top: introButton}}>
               <TouchableHighlight
                 style={styles.buttonWrapper}
@@ -164,12 +178,6 @@ export default class LoginScreen extends React.Component {
               </TouchableHighlight>
             </Animated.View>
           </View>
-          <Animated.Text style={{
-              marginBottom: this.scale
-            }}
-          >
-            Join
-          </Animated.Text>
           <Animated.Text style={{
               marginBottom: 25,
               transform: [{scale: scaleText}]
@@ -189,7 +197,6 @@ export default class LoginScreen extends React.Component {
 
   userLogin = async () => {
     const {navigate} = this.props.navigation;
-
     await this.login();
     if (this.state.responseStatus === 200) {
       this.setState({errorMessage: ''});
@@ -220,6 +227,8 @@ export default class LoginScreen extends React.Component {
       })
       .catch((error) => {
         console.error(error);
+        this.decayAnimation();
+        this.spring();
       });
   }
 }
