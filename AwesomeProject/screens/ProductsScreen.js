@@ -6,7 +6,9 @@ import {
   TouchableHighlight,
   RefreshControl,
   Modal,
-  Alert
+  Alert,
+  TouchableOpacity,
+  Animated,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -17,7 +19,7 @@ import { colors } from '../styles/variables.js';
 const CustomIcon = createIconSetFromFontello(fontelloConfig, 'AwesomeIcons');
 
 export default class ProductsScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     title: 'Products',
     headerStyle: {
       backgroundColor: colors.blue,
@@ -28,20 +30,50 @@ export default class ProductsScreen extends React.Component {
       fontFamily: 'vinchHand',
       fontSize: 30
     },
-  };
+  });
 
-  state = {
-    fontLoaded: false,
-    productsList: [],
-    page: 0,
-    refreshing: false,
-    modalVisible: false,
-    disabledButtons: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      fontLoaded: false,
+      productsList: [],
+      page: 0,
+      refreshing: false,
+      modalVisible: false,
+      disabledButtons: false,
+      fadeAnim: new Animated.Value(0),
+    };
+    this.animatedValue = new Animated.Value(0)
+  }
 
   componentDidMount() {
     this.mounted = true;
     this.fetchProducts();
+    this.sequenceAnimation();
+  }
+
+  fadeAnimation() {
+    Animated.timing(
+      this.state.fadeAnim,
+      {
+        toValue: 1,
+        duration: 1000,
+      }
+    ).start();
+  }
+
+  sequenceAnimation() {
+    this.animatedValue.setValue(0);
+    Animated.sequence([
+      Animated.timing(this.animatedValue, {
+        toValue: -30,
+        duration: 500,
+      }),
+      Animated.timing(this.animatedValue, {
+        toValue: -15,
+        duration: 200,
+      })
+    ]).start(() => this.sequenceAnimation());
   }
 
   componentWillUnmount() {
@@ -69,6 +101,7 @@ export default class ProductsScreen extends React.Component {
   setProducts = (items) => {
     if (this.mounted) {
       this.setState(({productsList}) => ({productsList: [...productsList, ...items]}));
+      this.fadeAnimation();
     }
   };
 
@@ -106,6 +139,14 @@ export default class ProductsScreen extends React.Component {
       () => this.fetchProducts()
     );
   };
+
+  navigateToProduct = (item) => {
+    const {navigate} = this.props.navigation;
+    navigate('Product', {
+      productName: item.name,
+      description: item.custom_attributes.find(product => product.attribute_code === 'description')
+    })
+  }
 
   renderModal() {
     const {modalVisible} = this.state;
@@ -155,11 +196,36 @@ export default class ProductsScreen extends React.Component {
   }
 
   renderList() {
-    const {navigate} = this.props.navigation;
-    const {productsList, refreshing} = this.state;
+    const {productsList, refreshing, fadeAnim} = this.state;
+    const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
+    const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons);
+    const scroll = new Animated.Value(0);
+    const translateY = Animated.diffClamp(
+      scroll, 0, 50
+    );
+    const opacity = translateY.interpolate({
+      inputRange: [0, 50], 
+      outputRange: [1, 0]
+    });
+
     return (
       <View style={styles.container}>
-        <FlatList
+        <Animated.View style= {{ 
+              backgroundColor: 'yellow',
+              alignItems: 'center',
+              transform: [ { translateY } ]
+            }}
+          >
+          <Animated.Text style ={{ opacity }}>
+          List of best products
+          </Animated.Text>
+        </Animated.View>
+        <AnimatedFlatList 
+          contentContainerStyle={{ paddingTop: 50 }}
+          onScroll={ Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scroll } } }],
+          { useNativeDriver: true }
+          )}
           data={productsList}
           refreshing={refreshing}
           keyExtractor={(item, index) => index.toString()}
@@ -167,24 +233,24 @@ export default class ProductsScreen extends React.Component {
           renderItem={({item}) => (
             <TouchableHighlight
               underlayColor="#CEDB56"
-              onPress={() => {navigate('Product', {
-                productName: item.name,
-                description: item.custom_attributes.find(product => product.attribute_code === 'description')
-              })
-              }}
+              onPress={() => this.navigateToProduct(item)}
             >
-              <View style={styles.row}>
+              <Animated.View style={
+                [styles.row, {
+                  opacity: fadeAnim,
+                }]}
+              >
                 <View style={styles.product}>
-                  <CustomIcon
-                    style={styles.icon}
-                    name={item.icon}
-                    size={28}
-                    color="#222"
-                  />
-                  <Text style={styles.productName}>{item.name}</Text>
+                  <Text style={styles.productName}>
+                    {item.name}
+                  </Text>
                 </View>
-                <Ionicons name="ios-arrow-forward" size={22} />
-              </View>
+                <AnimatedIonicons 
+                  name="ios-arrow-forward" 
+                  size={22}
+                  style={{marginRight: this.animatedValue}} 
+                />
+              </Animated.View>
             </TouchableHighlight>
           )}
           onEndReached={this.handleLoadMore}
