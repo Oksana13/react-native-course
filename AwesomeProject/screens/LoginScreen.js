@@ -10,7 +10,8 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   Animated,
-  Easing
+  Easing,
+  AsyncStorage 
 } from 'react-native';
 import styles from '../styles/LoginStyles.js';
 
@@ -96,6 +97,14 @@ export default class LoginScreen extends React.Component {
       createAnimation(this.animatedValue1, 2000, Easing.ease),
       createAnimation(this.animatedValue2, 1000, Easing.ease, 1000),
     ]).start();
+  }
+
+   async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error.message);
+    }
   }
 
   render() {
@@ -221,6 +230,7 @@ export default class LoginScreen extends React.Component {
       .then((response) => {
         response.json();
         this.setState({responseStatus: response.status});
+        this.saveItem('userToken', response.body);
       })
       .then((response) => {
         return response;
