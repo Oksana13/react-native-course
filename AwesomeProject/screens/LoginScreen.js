@@ -11,7 +11,9 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
-  AsyncStorage 
+  AsyncStorage,
+  NetInfo,
+  Alert
 } from 'react-native';
 import styles from '../styles/LoginStyles.js';
 
@@ -33,6 +35,7 @@ export default class LoginScreen extends React.Component {
       responseStatus: '',
       width: 100,
       height: 100,
+      connectionStatus : ''
     };
     this.animatedValue = new Animated.Value(0);
     this.animatedValue1 = new Animated.Value(0);
@@ -42,8 +45,49 @@ export default class LoginScreen extends React.Component {
   }
 
   componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+        'connectionChange',
+        this.handleConnectivityChange
+    );
+    
+    NetInfo.isConnected.fetch().done((isConnected) => {
+      if(isConnected == true) {
+        this.setState({connectionStatus : "Online"});
+      } else {
+        this.setState({connectionStatus : "Offline"});
+        this.handleConnectionAlert();
+      }
+    });
     this.parallelAnimation();
     this.animate();
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener(
+      'connectionChange',
+      this.handleConnectivityChange
+    );
+  }
+
+  handleConnectivityChange = (isConnected) => {
+    if(isConnected == true) {
+      this.setState({connectionStatus : "Online"});
+    } else {
+      this.setState({connectionStatus : "Offline"});
+      this.handleConnectionAlert();
+    }
+  };
+
+  handleConnectionAlert = () => {
+    Alert.alert(
+      'Wi-Fi and cellular data are turned off',
+      'Please, turn network connection on.',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
   }
 
   animate() {
