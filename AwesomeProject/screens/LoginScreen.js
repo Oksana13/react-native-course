@@ -10,7 +10,10 @@ import {
   LayoutAnimation,
   TouchableOpacity,
   Animated,
-  Easing
+  Easing,
+  AsyncStorage,
+  NetInfo,
+  Alert
 } from 'react-native';
 import styles from '../styles/LoginStyles.js';
 
@@ -32,6 +35,7 @@ export default class LoginScreen extends React.Component {
       responseStatus: '',
       width: 100,
       height: 100,
+      connectionStatus : ''
     };
     this.animatedValue = new Animated.Value(0);
     this.animatedValue1 = new Animated.Value(0);
@@ -41,8 +45,49 @@ export default class LoginScreen extends React.Component {
   }
 
   componentDidMount() {
+    NetInfo.isConnected.addEventListener(
+        'connectionChange',
+        this.handleConnectivityChange
+    );
+    
+    NetInfo.isConnected.fetch().done((isConnected) => {
+      if(isConnected == true) {
+        this.setState({connectionStatus : "Online"});
+      } else {
+        this.setState({connectionStatus : "Offline"});
+        this.handleConnectionAlert();
+      }
+    });
     this.parallelAnimation();
     this.animate();
+  }
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener(
+      'connectionChange',
+      this.handleConnectivityChange
+    );
+  }
+
+  handleConnectivityChange = (isConnected) => {
+    if(isConnected == true) {
+      this.setState({connectionStatus : "Online"});
+    } else {
+      this.setState({connectionStatus : "Offline"});
+      this.handleConnectionAlert();
+    }
+  };
+
+  handleConnectionAlert = () => {
+    Alert.alert(
+      'Wi-Fi and cellular data are turned off',
+      'Please, turn network connection on.',
+      [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
   }
 
   animate() {
@@ -96,6 +141,14 @@ export default class LoginScreen extends React.Component {
       createAnimation(this.animatedValue1, 2000, Easing.ease),
       createAnimation(this.animatedValue2, 1000, Easing.ease, 1000),
     ]).start();
+  }
+
+   async saveItem(item, selectedValue) {
+    try {
+      await AsyncStorage.setItem(item, selectedValue);
+    } catch (error) {
+      console.error('AsyncStorage error: ' + error.message);
+    }
   }
 
   render() {
@@ -221,6 +274,7 @@ export default class LoginScreen extends React.Component {
       .then((response) => {
         response.json();
         this.setState({responseStatus: response.status});
+        this.saveItem('userToken', response.body);
       })
       .then((response) => {
         return response;

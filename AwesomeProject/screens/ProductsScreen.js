@@ -9,6 +9,7 @@ import {
   Alert,
   TouchableOpacity,
   Animated,
+  Vibration,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createIconSetFromFontello } from '@expo/vector-icons';
@@ -119,6 +120,7 @@ export default class ProductsScreen extends React.Component {
         return response;
       })
       .catch((error) => {
+        Vibration.vibrate(1000);
         this.setModalVisible(true);
         return error;
       });
