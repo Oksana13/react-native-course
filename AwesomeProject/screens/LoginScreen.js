@@ -272,9 +272,12 @@ export default class LoginScreen extends React.Component {
       }),
     })
       .then((response) => {
-        response.json();
-        this.setState({responseStatus: response.status});
-        this.saveItem('userToken', response.body);
+        const result = response.json();
+        // alert(JSON.stringify(result));
+        this.setState({responseStatus: 200});
+        this.saveItem('userToken', result.body);
+
+        return result;
       })
       .then((response) => {
         return response;
