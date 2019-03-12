@@ -43,5 +43,6 @@
     <item name="android:colorControlHighlight">
       @color/white
     </item>
+    <item name="android:windowIsTranslucent">true</item>
   </style>
 </resources>

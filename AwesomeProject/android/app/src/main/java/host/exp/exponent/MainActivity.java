@@ -9,6 +9,9 @@ import java.util.List;
 import expo.core.interfaces.Package;
 import host.exp.exponent.generated.DetachBuildConstants;
 import host.exp.exponent.experience.DetachActivity;
+import android.os.Bundle; 
+import com.facebook.react.ReactActivity;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends DetachActivity {
 
@@ -41,5 +44,11 @@ public class MainActivity extends DetachActivity {
   public Bundle initialProps(Bundle expBundle) {
     // Add extra initialProps here
     return expBundle;
+  }
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+      SplashScreen.show(this);
+      super.onCreate(savedInstanceState);
   }
 }
