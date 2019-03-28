@@ -23,6 +23,18 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "react-native",
+            "project": "RN-Tools",
+            "authToken": "e3a3c236e7934218a81cf93155cf492f8d502473b0e64c989f7741d470f429c7"
+          }
+        }
+      ]
     }
   }
 }
