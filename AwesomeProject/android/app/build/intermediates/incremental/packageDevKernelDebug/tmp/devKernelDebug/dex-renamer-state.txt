@@ -1,0 +1,25 @@
+#Tue Apr 02 15:37:22 MSK 2019
+path.1=classes.dex
+path.0=classes.dex
+renamed.7=classes8.dex
+renamed.6=classes7.dex
+renamed.5=classes6.dex
+renamed.4=classes5.dex
+renamed.3=classes4.dex
+renamed.2=classes3.dex
+renamed.1=classes2.dex
+renamed.0=classes.dex
+base.7=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\6
+base.6=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\5
+base.5=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\1
+base.4=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\1
+base.3=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\0
+base.2=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\3
+base.1=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\2
+base.0=C\:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\transforms\\dexMerger\\devKernel\\debug\\1
+path.7=classes.dex
+path.6=classes.dex
+path.5=classes3.dex
+path.4=classes2.dex
+path.3=classes.dex
+path.2=classes.dex

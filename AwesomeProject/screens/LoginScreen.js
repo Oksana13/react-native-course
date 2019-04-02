@@ -16,6 +16,7 @@ import {
   Alert
 } from 'react-native';
 import styles from '../styles/LoginStyles.js';
+import * as Keychain from 'react-native-keychain';
 
 const { UIManager } = NativeModules;
 
@@ -35,7 +36,8 @@ export default class LoginScreen extends React.Component {
       responseStatus: '',
       width: 100,
       height: 100,
-      connectionStatus : ''
+      connectionStatus : '',
+      token: {}
     };
     this.animatedValue = new Animated.Value(0);
     this.animatedValue1 = new Animated.Value(0);
@@ -44,7 +46,15 @@ export default class LoginScreen extends React.Component {
     this.scale = new Animated.Value(-200);
   }
 
+  async getToken() {
+    return await Keychain.getGenericPassword();
+  };
+
   componentDidMount() {
+    this.getToken().then((token) => {
+      this.setState({token});
+    });
+
     NetInfo.isConnected.addEventListener(
         'connectionChange',
         this.handleConnectivityChange
@@ -144,7 +154,9 @@ export default class LoginScreen extends React.Component {
   }
 
    async saveItem(item, selectedValue) {
+     console.log('alert');
     try {
+      await Keychain.setGenericPassword(item, selectedValue);
       await AsyncStorage.setItem(item, selectedValue);
     } catch (error) {
       console.error('AsyncStorage error: ' + error.message);
@@ -191,7 +203,8 @@ export default class LoginScreen extends React.Component {
                 fontFamily: 'vinchHand',
               }}
             >
-              Friday's shop
+              Friday's shop!!
+              {this.state.token.password}
             </Animated.Text>
           </View>
           <View style={styles.form}>

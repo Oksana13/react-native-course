@@ -2,6 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
+import SplashScreen from 'react-native-splash-screen';
 
 export default class App extends React.Component {
   state = {
@@ -50,10 +51,12 @@ export default class App extends React.Component {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);
+    SplashScreen.hide();
   };
 
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
+    SplashScreen.hide();
   };
 }
 

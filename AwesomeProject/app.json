@@ -23,10 +23,17 @@
     ],
     "ios": {
       "supportsTablet": true,
-	    "bundleIdentifier": "com.example.test"
+      "bundleIdentifier": "com.example.test"
     },
-	  "android": {
-      "package": "com.example.test"
-    }
+    "android": {
+      "package": "com.example.test",
+      "publishBundlePath": "android\\app\\src\\main\\assets\\shell-app.bundle",
+      "publishManifestPath": "android\\app\\src\\main\\assets\\shell-app-manifest.json"
+    },
+    "isDetached": true,
+    "detach": {
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.7-sdk32.0.0-3ff7f3bf-8e53-4d61-b963-1d7d92a77d79.tar.gz"
+    },
+    "scheme": "expd27639b3883a487f948efac0798c5569"
   }
 }
