@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-watch-v20\\values-watch-v20.xml",
+            "outputFile": "C:\\PROJECTS\\EPAM\\RN_MENTORING\\11\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-watch-v20\\values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\882d57d040a4e74eca51b546f5e66880\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\33145653e482c41b3f37376aada6534f\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-16.0.1.aar\\edc4494cbff2219d2867a4d67170f06e\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-16.0.1.aar\\9e9c74f3cd817ef744f86ade91cb3edf\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

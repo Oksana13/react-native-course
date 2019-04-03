@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-v24\\values-v24.xml",
+            "outputFile": "C:\\PROJECTS\\EPAM\\RN_MENTORING\\11\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-v24\\values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\882d57d040a4e74eca51b546f5e66880\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\33145653e482c41b3f37376aada6534f\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
@@ -14,7 +14,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-27.0.2.aar\\3b66a64b2794a1d617565973b5fc6f8f\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-28.0.0.aar\\fd7ca667d5fb7e5b64f57656ef17a587\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",

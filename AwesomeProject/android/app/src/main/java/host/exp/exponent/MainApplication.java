@@ -33,7 +33,9 @@ import expo.modules.taskManager.TaskManagerPackage;
 import expolib_v1.okhttp3.OkHttpClient;
 
 // Needed for `react-native link`
-// import com.facebook.react.ReactApplication;
+import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.airbnb.android.react.lottie.LottiePackage;
 import com.oblador.keychain.KeychainPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
@@ -52,6 +54,8 @@ public class MainApplication extends ExpoApplication implements AppLoaderPackage
 
         // Needed for `react-native link`
         // new MainReactPackage(),
+            new RNDeviceInfo(),
+            new LottiePackage(),
             new KeychainPackage(),
             new SplashScreenReactPackage()
     );

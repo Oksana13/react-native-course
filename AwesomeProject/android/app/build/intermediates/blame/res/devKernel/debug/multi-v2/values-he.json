@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-he\\values-he.xml",
+            "outputFile": "C:\\PROJECTS\\EPAM\\RN_MENTORING\\11\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-he\\values-he.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\android-image-cropper-2.7.0.aar\\74a6a6a530c005450e205255780af157\\res\\values-he\\values-he.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\android-image-cropper-2.7.0.aar\\831ba0da725f7abf9e2ddba33a621b7e\\res\\values-he\\values-he.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

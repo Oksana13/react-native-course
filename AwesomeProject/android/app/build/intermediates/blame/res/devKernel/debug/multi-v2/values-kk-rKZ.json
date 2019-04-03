@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Projects\\rn-13\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-kk-rKZ\\values-kk-rKZ.xml",
+            "outputFile": "C:\\PROJECTS\\EPAM\\RN_MENTORING\\11\\react-native-course\\AwesomeProject\\android\\app\\build\\intermediates\\incremental\\mergeDevKernelDebugResources\\merged.dir\\values-kk-rKZ\\values-kk-rKZ.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\oksana_klimova\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-2.6.1.aar\\331260f2514904373e2b438e902191e8\\res\\values-kk-rKZ\\values-kk-rKZ.xml",
+                    "source": "C:\\Users\\Vitalii_Antonov\\.gradle\\caches\\transforms-1\\files-1.1\\exoplayer-ui-2.6.1.aar\\1459380136ba878210950d6a701b6f7e\\res\\values-kk-rKZ\\values-kk-rKZ.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
