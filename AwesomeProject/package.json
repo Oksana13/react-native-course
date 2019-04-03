@@ -16,6 +16,7 @@
     "@expo/samples": "2.1.1",
     "expo": "^32.0.6",
     "expokit": "^32.0.7",
+    "lottie-react-native": "^2.6.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-device-info": "^1.4.1",
