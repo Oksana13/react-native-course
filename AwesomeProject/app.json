@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ReactNativeCourse-module-4",
+    "name": "ReactNativeCourse",
     "description": "A very interesting project.",
     "slug": "reactnativecourse-module-4",
     "privacy": "public",
@@ -35,6 +35,8 @@
           }
         }
       ]
+    "android": {
+      "package": "com.yourcompany.yourappname"
     }
   }
 }

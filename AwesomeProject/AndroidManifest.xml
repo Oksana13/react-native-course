@@ -1,2 +1,3 @@
 <uses-permission android:name="android.permission.VIBRATE"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<receiver android:process=":remote" android:name="com.github.wumke.RNLocalNotifications.AlarmReceiver" android:exported="true"></receiver>
