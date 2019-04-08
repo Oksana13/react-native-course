@@ -283,7 +283,7 @@ export default class LoginScreen extends React.Component {
         return response;
       })
       .catch((error) => {
-        console.error(error);
+        Sentry.captureException(`Something went wrong with login: ${error}`);
         this.decayAnimation();
         this.spring();
       });
